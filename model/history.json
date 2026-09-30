@@ -1,0 +1,138 @@
+[
+  {
+    "id": 17,
+    "title": "Researchers in Pakistan reportedly discovered a traditional food that can perman...",
+    "label": "FAKE",
+    "confidence": 59.9,
+    "category": "Technology",
+    "date": "Aug 27, 2026"
+  },
+  {
+    "id": 16,
+    "title": "Pakistan and Iran made significant progress in talks focused on the ongoing conf...",
+    "label": "REAL",
+    "confidence": 83.2,
+    "category": "Health",
+    "date": "Aug 26, 2026"
+  },
+  {
+    "id": 15,
+    "title": "A viral video shows Pakistan\u2019s Defence Minister Khawaja Asif comparing Pakistan\u2019...",
+    "label": "FAKE",
+    "confidence": 58.2,
+    "category": "Entertainment",
+    "date": "Aug 26, 2026"
+  },
+  {
+    "id": 14,
+    "title": "Pakistan\u2019s army chief Asim Munir spoke with U.S. President Donald Trump before h...",
+    "label": "REAL",
+    "confidence": 66.6,
+    "category": "Technology",
+    "date": "Aug 26, 2026"
+  },
+  {
+    "id": 13,
+    "title": "A viral video shows Pakistan\u2019s Defence Minister Khawaja Asif making a statement ...",
+    "label": "FAKE",
+    "confidence": 50.7,
+    "category": "Health",
+    "date": "Aug 26, 2026"
+  },
+  {
+    "id": 12,
+    "title": "\u201cNASA\u2019s Artemis II mission is planned to carry four astronauts around the Moon a...",
+    "label": "REAL",
+    "confidence": 54.9,
+    "category": "Politics",
+    "date": "Aug 26, 2026"
+  },
+  {
+    "id": 11,
+    "title": "A new smartphone technology has reportedly been developed that allows phones to ...",
+    "label": "FAKE",
+    "confidence": 76.4,
+    "category": "Politics",
+    "date": "Aug 26, 2026"
+  },
+  {
+    "id": 10,
+    "title": "Scientists have announced that drinking blue-colored water every morning can pre...",
+    "label": "FAKE",
+    "confidence": 87.1,
+    "category": "Entertainment",
+    "date": "Aug 26, 2026"
+  },
+  {
+    "id": 9,
+    "title": "doland trum is a muslim",
+    "label": "FAKE",
+    "confidence": 69.1,
+    "category": "World",
+    "date": "Aug 26, 2026"
+  },
+  {
+    "id": 8,
+    "title": "Breaking News: Scientists have discovered a new technology that allows ordinary ...",
+    "label": "REAL",
+    "confidence": 94.3,
+    "category": "Health",
+    "date": "Aug 26, 2026"
+  },
+  {
+    "id": 7,
+    "title": "Breaking News: Scientists have discovered a new technology that allows ordinary ...",
+    "label": "REAL",
+    "confidence": 94.3,
+    "category": "Technology",
+    "date": "Aug 26, 2026"
+  },
+  {
+    "id": 6,
+    "title": "Donald Trump Sends Out Embarrassing New Year\u00e2\u20ac\u2122s Eve Message; This is Disturbing",
+    "label": "FAKE",
+    "confidence": 90.0,
+    "category": "Entertainment",
+    "date": "Aug 26, 2026"
+  },
+  {
+    "id": 5,
+    "title": "Donald Trump Sends Out Embarrassing New Year\u00e2\u20ac\u2122s Eve Message; This is Disturbing",
+    "label": "FAKE",
+    "confidence": 90.0,
+    "category": "Entertainment",
+    "date": "Aug 26, 2026"
+  },
+  {
+    "id": 4,
+    "title": "Breaking News: Scientists have announced that drinking one glass of warm salt wa...",
+    "label": "REAL",
+    "confidence": 83.0,
+    "category": "Health",
+    "date": "Aug 26, 2026"
+  },
+  {
+    "id": 3,
+    "title": "Fake News Detector is an AI-powered system designed to identify whether a news a...",
+    "label": "REAL",
+    "confidence": 99.0,
+    "category": "Entertainment",
+    "date": "Aug 26, 2026"
+  },
+  {
+    "id": 2,
+    "title": "Fake News Detector is an AI-powered system designed to identify whether a news a...",
+    "label": "REAL",
+    "confidence": 99.0,
+    "category": "Entertainment",
+    "date": "Aug 26, 2026"
+  },
+  {
+    "id": 1,
+    "title": "The government announced a new public policy today.",
+    "label": "REAL",
+    "confidence": 56.1,
+    "category": "Technology",
+    "date": "Aug 26, 2026"
+  }
+]

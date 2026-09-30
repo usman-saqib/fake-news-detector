@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login - Fake News Detector</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+<body>
+
+<div class="auth-wrapper">
+
+    <!-- ================= THEME TOGGLE ================= -->
+  <div class="theme-toggle">
+    <button type="button" class="theme-btn active" data-theme="dark" onclick="setTheme('dark', this)">🌙 Dark</button>
+    <button type="button" class="theme-btn" data-theme="light" onclick="setTheme('light', this)">☀️ Light</button>
+  </div>
+  
+  <!-- ================= LEFT PANEL ================= -->
+  <div class="left-panel">
+
+    <div class="left-top">
+      <div class="brand">
+        <div class="brand-icon">🛡️</div>
+        <div>
+          <div class="brand-title">Fake News</div>
+          <div class="brand-sub">DETECTOR</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="left-content">
+      <h1>Detect the Truth,<br><span class="highlight">Stop Misinformation</span></h1>
+      <p class="left-desc">Our AI-powered system analyzes news articles and helps you identify real news from fake news.</p>
+
+      <div class="feature-list">
+        <div class="feature-item">
+          <div class="feature-icon">✅</div>
+          <div>
+            <div class="feature-title">Smart Detection</div>
+            <div class="feature-desc">Advanced AI models to analyze and detect fake news</div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🕒</div>
+          <div>
+            <div class="feature-title">Real-time Analysis</div>
+            <div class="feature-desc">Get instant results and confidence scores for any article</div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">📊</div>
+          <div>
+            <div class="feature-title">Detailed Insights</div>
+            <div class="feature-desc">View detailed analysis and reasons behind the result</div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🔒</div>
+          <div>
+            <div class="feature-title">Secure &amp; Private</div>
+            <div class="feature-desc">Your data is protected and never shared</div>
+          </div>
+        </div>
+      </div>
+
+      <p class="quote">&ldquo;Information is power. Don't be fooled. Verify before you trust.&rdquo;</p>
+    </div>
+  </div>
+
+  <!-- ================= RIGHT PANEL ================= -->
+  <div class="right-panel">
+    <div class="auth-card">
+
+      <div class="auth-tabs">
+        <div class="auth-tab active" data-form="login-form">Login</div>
+        <div class="auth-tab" data-form="signup-form">Sign Up</div>
+      </div>
+
+      {% if error %}
+      <div class="error-banner">{{ error }}</div>
+      {% endif %}
+
+      <!-- ---------------- LOGIN FORM ---------------- -->
+      <form id="login-form" class="auth-form" method="POST" action="{{ url_for('login') }}">
+        <h2>Welcome Back!</h2>
+        <p class="auth-sub">Login to continue to your account</p>
+
+        <div class="input-group">
+          <span class="input-icon">✉️</span>
+          <input type="text" name="identifier" placeholder="Email or Username" required>
+        </div>
+
+        <div class="input-group">
+          <span class="input-icon">🔒</span>
+          <input type="password" name="password" id="login-password" placeholder="Password" required>
+          <span class="toggle-eye" onclick="togglePassword('login-password', this)">👁️</span>
+        </div>
+
+        <div class="row-between">
+          <label class="checkbox-label">
+            <input type="checkbox" name="remember"> Remember me
+          </label>
+          <a href="#" class="link">Forgot Password?</a>
+        </div>
+
+        <button type="submit" class="btn-submit">Login <span>→</span></button>
+
+        <div class="divider"><span>OR</span></div>
+
+        <button type="button" class="btn-google">🔵 Login with Google</button>
+
+        <div class="banner-note">
+          🛡️ Join thousands of users who are already fighting misinformation with us.
+        </div>
+      </form>
+
+      <!-- ---------------- SIGNUP FORM ---------------- -->
+      <form id="signup-form" class="auth-form hidden" method="POST" action="{{ url_for('signup') }}">
+        <h2>Create Account</h2>
+        <p class="auth-sub">Sign up to start detecting fake news</p>
+
+        <div class="input-group">
+          <span class="input-icon">👤</span>
+          <input type="text" name="full_name" placeholder="Full Name" required>
+        </div>
+
+        <div class="input-group">
+          <span class="input-icon">✉️</span>
+          <input type="email" name="email" placeholder="Email Address" required>
+        </div>
+
+        <div class="input-group">
+          <span class="input-icon">🧑</span>
+          <input type="text" name="username" placeholder="Username" required>
+        </div>
+
+        <div class="input-group">
+          <span class="input-icon">🔒</span>
+          <input type="password" name="password" id="signup-password" placeholder="Password" required>
+          <span class="toggle-eye" onclick="togglePassword('signup-password', this)">👁️</span>
+        </div>
+
+        <div class="input-group">
+          <span class="input-icon">🔒</span>
+          <input type="password" name="confirm_password" id="signup-confirm" placeholder="Confirm Password" required>
+          <span class="toggle-eye" onclick="togglePassword('signup-confirm', this)">👁️</span>
+        </div>
+
+        <button type="submit" class="btn-submit">Sign Up <span>→</span></button>
+      </form>
+
+    </div>
+  </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/login.js') }}"></script>
+</body>
+</html>

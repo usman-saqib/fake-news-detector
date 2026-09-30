@@ -1,0 +1,10 @@
+{
+    "model_name": "PassiveAggressiveClassifier",
+    "accuracy": 99.2,
+    "precision": 99.1,
+    "recall": 99.4,
+    "f1_score": 99.2,
+    "cv_accuracy": 99.2,
+    "total_fake_samples": 17902,
+    "total_real_samples": 21196
+}

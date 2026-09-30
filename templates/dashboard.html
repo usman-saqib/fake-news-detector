@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fake News Detection System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-icon">🛡️</div>
+      <div>
+        <div class="brand-title">Fake News</div>
+        <div class="brand-sub">Detection System</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a href="#" class="nav-item active" data-tab="dashboard-tab">
+        <span class="nav-icon">🏠</span> Dashboard
+      </a>
+      <a href="#" class="nav-item" data-tab="analyze-tab">
+        <span class="nav-icon">🔍</span> Analyze News
+      </a>
+      <a href="#" class="nav-item" data-tab="history-tab">
+        <span class="nav-icon">🕒</span> History
+      </a>
+      <a href="#" class="nav-item" data-tab="statistics-tab">
+        <span class="nav-icon">📊</span> Statistics
+      </a>
+      <a href="#" class="nav-item" data-tab="dataset-tab">
+        <span class="nav-icon">🗂️</span> Dataset
+      </a>
+      <a href="#" class="nav-item" data-tab="performance-tab">
+        <span class="nav-icon">📈</span> Model Performance
+      </a>
+      <a href="#" class="nav-item" data-tab="alerts-tab">
+        <span class="nav-icon">🔔</span> Alerts
+      </a>
+      <a href="#" class="nav-item" data-tab="settings-tab">
+        <span class="nav-icon">⚙️</span> Settings
+      </a>
+      <a href="#" class="nav-item" data-tab="about-tab">
+        <span class="nav-icon">ℹ️</span> About
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="footer-icon">🛡️📰</div>
+      <div class="footer-title">Stay Informed, Stay Safe</div>
+      <div class="footer-sub">Verify news. Stop misinformation.</div>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <main class="main">
+
+    <!-- Topbar -->
+    <div class="topbar">
+      <div>
+        <h1 id="page-title">Dashboard Overview</h1>
+        <p id="page-subtitle">Monitor your fake news detection system</p>
+      </div>
+     <div class="topbar-right">
+  <div class="bell">🔔<span class="dot"></span></div>
+  <div class="user">
+    <div class="avatar">{{ full_name[:2].upper() }}</div>
+    <span>{{ full_name }}</span>
+  </div>
+  <a href="{{ url_for('logout') }}" class="logout-link">Logout</a>
+</div>
+</div>
+
+    <!-- ============ DASHBOARD TAB ============ -->
+    <section class="tab-content" id="dashboard-tab">
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-icon green">📄</div>
+          <div class="stat-info">
+            <div class="stat-label">Total Analyzed</div>
+            <div class="stat-value" id="stat-total">0</div>
+            <div class="stat-change up" id="stat-total-change">↑ 0% this week</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green">🛡️</div>
+          <div class="stat-info">
+            <div class="stat-label">Real News</div>
+            <div class="stat-value" id="stat-real">0</div>
+            <div class="stat-change up" id="stat-real-pct">0%</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon orange">⛔</div>
+          <div class="stat-info">
+            <div class="stat-label">Fake News</div>
+            <div class="stat-value" id="stat-fake">0</div>
+            <div class="stat-change down" id="stat-fake-pct">0%</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon purple">📶</div>
+          <div class="stat-info">
+            <div class="stat-label">Accuracy</div>
+            <div class="stat-value" id="stat-accuracy">0%</div>
+            <div class="stat-change up">Model accuracy</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3>Analyze News Article</h3>
+          <p class="muted">Paste your news article content below to analyze</p>
+          <textarea id="dash-input" placeholder="Paste or type news article here..."></textarea>
+          <button class="btn-primary" onclick="analyzeNews('dash')">✈ Analyze Now</button>
+        </div>
+
+        <div class="card">
+          <h3>Latest Result</h3>
+          <div id="dash-result-box" class="result-box hidden">
+            <div class="result-header">
+              <span id="dash-result-icon">✅</span>
+              <div>
+                <div id="dash-result-label" class="result-label">REAL NEWS</div>
+                <div id="dash-result-desc" class="result-desc">This article is likely to be real.</div>
+              </div>
+            </div>
+            <div class="confidence-row">
+              <span>Confidence Score</span>
+              <span id="dash-confidence-value">0%</span>
+            </div>
+            <div class="progress-bar"><div id="dash-confidence-bar" class="progress-fill"></div></div>
+            <div class="reasons">
+              <strong>Key Reasons</strong>
+              <ul id="dash-reasons-list"></ul>
+            </div>
+          </div>
+          <div id="dash-empty-state" class="empty-state">
+            Paste an article and click "Analyze Now" to see results here.
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Analysis Over Time</h3>
+          <canvas id="lineChart" height="220"></canvas>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>Fake News by Category</h3>
+          <div class="donut-wrap">
+            <canvas id="donutChart" height="200"></canvas>
+            <ul class="legend" id="donut-legend"></ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header-row">
+            <h3>Recent Analyzed Articles</h3>
+            <a href="#" class="view-all" data-tab="history-tab">View All</a>
+          </div>
+          <table class="table">
+            <tbody id="recent-articles-body">
+              <tr><td colspan="4" class="muted">No articles analyzed yet.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+  <h3>Model Performance</h3>
+  <div class="metric-grid">
+    <div class="metric">
+      <div class="metric-label">Accuracy</div>
+      <div class="metric-value" id="m-accuracy">0%</div>
+      <canvas class="sparkline" id="spark-accuracy" height="30"></canvas>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Precision</div>
+      <div class="metric-value" id="m-precision">0%</div>
+      <canvas class="sparkline" id="spark-precision" height="30"></canvas>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Recall</div>
+      <div class="metric-value" id="m-recall">0%</div>
+      <canvas class="sparkline" id="spark-recall" height="30"></canvas>
+    </div>
+    <div class="metric">
+      <div class="metric-label">F1 Score</div>
+      <div class="metric-value" id="m-f1">0%</div>
+      <canvas class="sparkline" id="spark-f1" height="30"></canvas>
+    </div>
+  </div>
+</div>
+    </section>
+
+    <!-- ============ ANALYZE NEWS TAB ============ -->
+    <section class="tab-content hidden" id="analyze-tab">
+      <div class="card wide">
+        <h3>Analyze a News Article</h3>
+        <p class="muted">Paste the full article text (title + body works best) for the most accurate result.</p>
+        <textarea id="analyze-input" placeholder="Paste or type news article here..." style="min-height:220px;"></textarea>
+        <button class="btn-primary" onclick="analyzeNews('analyze')">✈ Analyze Now</button>
+
+        <div id="analyze-result-box" class="result-box hidden" style="margin-top:24px;">
+          <div class="result-header">
+            <span id="analyze-result-icon">✅</span>
+            <div>
+              <div id="analyze-result-label" class="result-label">REAL NEWS</div>
+              <div id="analyze-result-desc" class="result-desc">This article is likely to be real.</div>
+            </div>
+          </div>
+          <div class="confidence-row">
+            <span>Confidence Score</span>
+            <span id="analyze-confidence-value">0%</span>
+          </div>
+          <div class="progress-bar"><div id="analyze-confidence-bar" class="progress-fill"></div></div>
+          <div class="reasons">
+            <strong>Key Reasons</strong>
+            <ul id="analyze-reasons-list"></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ HISTORY TAB ============ -->
+    <section class="tab-content hidden" id="history-tab">
+      <div class="card wide">
+        <h3>Analysis History</h3>
+        <p class="muted">All previously analyzed articles in this session.</p>
+        <table class="table">
+          <thead>
+            <tr><th>Result</th><th>Article</th><th>Category</th><th>Date</th><th>Confidence</th></tr>
+          </thead>
+          <tbody id="history-table-body">
+            <tr><td colspan="5" class="muted">No history yet.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ STATISTICS TAB ============ -->
+    <section class="tab-content hidden" id="statistics-tab">
+      <div class="grid-2">
+        <div class="card">
+          <h3>Real vs Fake Distribution</h3>
+          <canvas id="statsBarChart" height="240"></canvas>
+        </div>
+        <div class="card">
+          <h3>Fake News by Category</h3>
+          <canvas id="statsDonutChart" height="240"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ DATASET TAB ============ -->
+    <section class="tab-content hidden" id="dataset-tab">
+      <div class="card wide">
+        <h3>Dataset Information</h3>
+        <p class="muted">This model was trained on the <strong>Fake and Real News Dataset</strong> (Kaggle).</p>
+        <div class="metric-grid">
+          <div class="metric"><div class="metric-label">Fake Articles</div><div class="metric-value" id="ds-fake">0</div></div>
+          <div class="metric"><div class="metric-label">Real Articles</div><div class="metric-value" id="ds-real">0</div></div>
+          <div class="metric"><div class="metric-label">Model Used</div><div class="metric-value" id="ds-model" style="font-size:16px;">-</div></div>
+        </div>
+        <p class="muted" style="margin-top:16px;">
+          Source: <a href="https://www.kaggle.com/datasets/clmentbisaillon/fake-and-real-news-dataset" target="_blank">Kaggle – Fake and Real News Dataset</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ MODEL PERFORMANCE TAB ============ -->
+    <!-- ============ MODEL PERFORMANCE TAB ============ -->
+<section class="tab-content hidden" id="performance-tab">
+
+  <div class="card wide perf-overview-card">
+    <div class="card-icon-title">
+      <span class="card-icon">📈</span>
+      <div>
+        <h3>Model Performance Overview</h3>
+        <p class="muted">Comprehensive evaluation of model performance on test dataset</p>
+      </div>
+    </div>
+
+    <div class="perf-metric-grid">
+      <div class="perf-metric-card">
+        <div class="perf-icon">🎯</div>
+        <div class="perf-label">Accuracy</div>
+        <div class="perf-value" id="perf-accuracy">0%</div>
+        <div class="progress-bar"><div class="progress-fill" id="perf-accuracy-bar"></div></div>
+        <div class="perf-tag" id="perf-accuracy-tag">✅ Excellent Performance</div>
+      </div>
+      <div class="perf-metric-card">
+        <div class="perf-icon">📈</div>
+        <div class="perf-label">Precision</div>
+        <div class="perf-value" id="perf-precision">0%</div>
+        <div class="progress-bar"><div class="progress-fill" id="perf-precision-bar"></div></div>
+        <div class="perf-tag" id="perf-precision-tag">✅ Excellent Performance</div>
+      </div>
+      <div class="perf-metric-card">
+        <div class="perf-icon">🔄</div>
+        <div class="perf-label">Recall</div>
+        <div class="perf-value" id="perf-recall">0%</div>
+        <div class="progress-bar"><div class="progress-fill" id="perf-recall-bar"></div></div>
+        <div class="perf-tag" id="perf-recall-tag">✅ Excellent Performance</div>
+      </div>
+      <div class="perf-metric-card">
+        <div class="perf-icon">🏅</div>
+        <div class="perf-label">F1 Score</div>
+        <div class="perf-value" id="perf-f1">0%</div>
+        <div class="progress-bar"><div class="progress-fill" id="perf-f1-bar"></div></div>
+        <div class="perf-tag" id="perf-f1-tag">✅ Excellent Performance</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-icon-title">
+        <span class="card-icon">📊</span>
+        <div>
+          <h3>Performance Visualization</h3>
+          <p class="muted">Visual representation of model metrics</p>
+        </div>
+      </div>
+
+    <div class="radar-wrap">
+  <div class="radar-canvas-box">
+    <canvas id="radarChart"></canvas>
+  </div>
+  <ul class="legend perf-legend" id="radar-legend"></ul>
+</div>
+
+      <div class="callout-box">
+        <span class="callout-icon">🏆</span>
+        <div>
+          <strong id="callout-title">Outstanding Performance!</strong>
+          <p id="callout-desc" class="muted" style="margin-bottom:0;">Your model is performing exceptionally well across all metrics.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-icon-title">
+        <span class="card-icon">📄</span>
+        <div>
+          <h3>Performance Summary</h3>
+          <p class="muted">Detailed summary of model evaluation</p>
+        </div>
+      </div>
+
+      <div class="summary-donut-wrap">
+        <div class="summary-donut">
+          <canvas id="summaryDonut" height="220"></canvas>
+          <div class="summary-donut-center">
+            <div class="summary-score" id="summary-score">0%</div>
+            <div class="summary-score-label">Overall Score</div>
+            <div class="summary-stars" id="summary-stars">☆☆☆☆☆</div>
+          </div>
+        </div>
+        <ul class="summary-list" id="summary-list"></ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="algo-banner">
+    💡 <strong>Algorithm Details:</strong> <span id="algo-details-text">-</span>
+  </div>
+</section>
+
+    <!-- ============ ALERTS TAB ============ -->
+    <section class="tab-content hidden" id="alerts-tab">
+      <div class="card wide">
+        <h3>Alerts</h3>
+        <p class="muted">High-risk fake news detected recently (confidence &gt; 85%).</p>
+        <table class="table">
+          <tbody id="alerts-table-body">
+            <tr><td colspan="4" class="muted">No alerts yet.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ SETTINGS TAB ============ -->
+    <section class="tab-content hidden" id="settings-tab">
+      <div class="card wide">
+        <h3>Settings</h3>
+        <p class="muted">Basic settings for this demo project.</p>
+        <div class="settings-row">
+          <label>Confidence alert threshold</label>
+          <input type="range" min="50" max="100" value="85" id="threshold-slider">
+          <span id="threshold-value">85%</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ABOUT TAB ============ -->
+    <section class="tab-content hidden" id="about-tab">
+      <div class="card wide">
+        <h3>About This Project</h3>
+        <p>
+          The <strong>Fake News Detection System</strong> is a machine learning based web
+          application that classifies news articles as <strong>REAL</strong> or
+          <strong>FAKE</strong> using Natural Language Processing (NLP).
+        </p>
+        <p class="muted">
+          Built with: Python, Flask, Scikit-learn, TF-IDF, PassiveAggressiveClassifier, Chart.js.
+        </p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+</body>
+</html>
